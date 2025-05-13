@@ -3,14 +3,14 @@ import { AuthenticationService } from './authentication.service';
 import { AuthenticationController } from './authentication.controller';
 import { PrismaService } from 'src/lib/prisma/prisma.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from 'src/lib/passport/jwt.strategy';
 
 @Module({
   imports: [
     ConfigModule,
     JwtModule.register({
-      global: true,
       signOptions: {
         expiresIn: '1h'
       }
@@ -21,7 +21,7 @@ import { PassportModule } from '@nestjs/passport';
     AuthenticationService,
     PrismaService,
     JwtService,
-    ConfigService
+    JwtStrategy
   ],
   controllers: [AuthenticationController]
 })

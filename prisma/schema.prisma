@@ -15,11 +15,34 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  username  String @unique
-  password  String
-  image_url String
+  id         Int        @id @default(autoincrement())
+  username   String     @unique
+  password   String
+  image_url  String
+  UserTask   UserTask[]
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+}
 
+model UserTask {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id])
+  task_id    Int      @unique
+  task       Task     @relation(fields: [task_id], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  start_date  DateTime
+  end_date    DateTime
+  is_done     Boolean
+  label_color String
+  UserTask    UserTask?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 }
