@@ -3,19 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
-import { JwtStrategy } from './lib/passport/jwt.strategy';
+import { TaskModule } from './modules/task/task.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true
     }),
-    AuthenticationModule
+    AuthenticationModule,
+    TaskModule
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    JwtStrategy
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

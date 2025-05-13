@@ -3,7 +3,7 @@ import { PrismaService } from 'src/lib/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { AuthenticationErrorModel, AuthenticationProfileResponse, AuthenticationResponse } from './authentication.model';
+import { AuthenticationErrorModel, AuthenticationProfileResponse, AuthenticationResponse, AuthenticationUserData } from './authentication.model';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -88,6 +88,15 @@ export class AuthenticationService {
   }
 
   async getUser(id: number): Promise<AuthenticationProfileResponse> {
+    const validateUser = await this.validateUser(id);
+
+    return {
+      status: 'OK',
+      data: validateUser
+    }
+  }
+
+  async validateUser(id: number): Promise<AuthenticationUserData> {
     const findUser = await this.prisma.user.findFirst({
       where: {
         id
@@ -99,11 +108,9 @@ export class AuthenticationService {
     }
 
     return {
-      status: 'OK',
-      data: {
-        username: findUser.username,
-        image_url: findUser.image_url
-      }
+      id: findUser.id,
+      username: findUser.username,
+      image_url: findUser.image_url
     }
   }
 }

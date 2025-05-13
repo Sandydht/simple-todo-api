@@ -14,6 +14,7 @@ export interface AuthenticationProfileResponse {
 }
 
 export interface AuthenticationUserData {
+  id: number;
   image_url: string;
   username: string;
 }
