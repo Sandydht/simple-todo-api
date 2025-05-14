@@ -164,4 +164,27 @@ export class TaskService {
       updated_at: new Date(findTask.updated_at).toISOString()
     }
   }
+
+  async deleteTask(userId: number, taskId: number): Promise<any> {
+    const validatedUser = await this.authenticationService.validateUser(userId);
+    const validatedUserTask = await this.validateUserTask(validatedUser.id, taskId);
+    const validatedTask = await this.validateTask(validatedUserTask.task_id);
+
+    await this.prismaService.userTask.delete({
+      where: {
+        id: validatedUserTask.id
+      }
+    })
+
+    await this.prismaService.task.delete({
+      where: {
+        id: validatedTask.id
+      }
+    })
+
+    return {
+      status: 'OK',
+      message: 'The task was successfully deleted!'
+    }
+  }
 }
