@@ -1,9 +1,9 @@
 export interface CreateTaskResponse {
   status: string;
-  data: UserTaskData;
+  data: TaskData;
 }
 
-export interface UserTaskData {
+export interface TaskData {
   id: number;
   title: string;
   description: string;
@@ -17,5 +17,11 @@ export interface UserTaskData {
 
 export interface GetTaskListResponse {
   status: string;
-  data: UserTaskData[];
+  data: TaskData[];
+}
+
+export interface UserTaskData {
+  id: number;
+  user_id: number;
+  task_id: number;
 }
