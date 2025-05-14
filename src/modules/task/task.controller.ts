@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { JwtAuthGuard } from 'src/guard/jwt-auth/jwt-auth.guard';
@@ -15,5 +15,13 @@ export class TaskController {
     const userId = req?.user?.sub;
     const response = await this.taskService.createTask(userId, createTaskDto)
     return response;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('get-task-list')
+  async getTaskList(@Req() req: any) {
+    const userId = req?.user?.sub;
+    const response = await this.taskService.getTaskList(userId)
+    return response
   }
 }
