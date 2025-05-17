@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, ValidationError } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException, ValidationError } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
@@ -26,10 +26,7 @@ export class AuthenticationService {
     })
 
     if (findUser) {
-      return {
-        status: 'error',
-        message: 'User already exist!'
-      }
+      throw new BadRequestException('User already exist!')
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
@@ -63,18 +60,12 @@ export class AuthenticationService {
     })
 
     if (!findUser) {
-      return {
-        status: 'error',
-        message: 'Username or password is incorrect!'
-      }
+      throw new BadRequestException('Username or password is incorrect!')
     }
 
     const isValidPassword = await bcrypt.compare(createUserDto.password, findUser.password)
     if (!isValidPassword) {
-      return {
-        status: 'error',
-        message: 'Username or password is incorrect!'
-      }
+      throw new BadRequestException('Username or password is incorrect!')
     }
 
     const jwtPayload = { sub: findUser.id }

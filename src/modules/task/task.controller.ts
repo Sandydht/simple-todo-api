@@ -4,7 +4,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { JwtAuthGuard } from 'src/guard/jwt-auth/jwt-auth.guard';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
-@Controller('task')
+@Controller('api/task')
 export class TaskController {
   constructor(
     private readonly taskService: TaskService
