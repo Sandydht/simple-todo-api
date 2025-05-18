@@ -8,10 +8,7 @@ import {
   TaskData,
   UserTaskData,
 } from './task.model';
-import {
-  fromDateToISO,
-  fromStringToLocalString,
-} from 'src/lib/luxon/formatter';
+import { fromDateToISO } from 'src/lib/luxon/formatter';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
@@ -53,8 +50,8 @@ export class TaskService {
         id: newTask.id,
         title: newTask.title,
         description: newTask.description,
-        start_date: fromStringToLocalString(String(newTask.start_date)),
-        end_date: fromStringToLocalString(String(newTask.end_date)),
+        start_date: new Date(newTask.start_date).toISOString(),
+        end_date: new Date(newTask.end_date).toISOString(),
         is_done: newTask.is_done,
         label_color: newTask.label_color,
         created_at: new Date(newTask.created_at).toISOString(),
@@ -87,10 +84,10 @@ export class TaskService {
 
     const mapTaskList = findUserTask.map((item) => ({
       ...item.task,
-      start_date: fromStringToLocalString(String(item.task.start_date)),
-      end_date: fromStringToLocalString(String(item.task.end_date)),
-      created_at: fromDateToISO(item.task.created_at),
-      updated_at: fromDateToISO(item.task.updated_at),
+      start_date: new Date(item.task.start_date).toISOString(),
+      end_date: new Date(item.task.end_date).toISOString(),
+      created_at: new Date(item.task.created_at).toISOString(),
+      updated_at: new Date(item.task.updated_at).toISOString(),
     }));
 
     return {
@@ -130,8 +127,8 @@ export class TaskService {
         id: updatedTask.id,
         title: updatedTask.title,
         description: updatedTask.description,
-        start_date: fromStringToLocalString(String(updatedTask.start_date)),
-        end_date: fromStringToLocalString(String(updatedTask.end_date)),
+        start_date: new Date(updatedTask.start_date).toISOString(),
+        end_date: new Date(updatedTask.end_date).toISOString(),
         is_done: updatedTask.is_done,
         label_color: updatedTask.label_color,
         created_at: new Date(updatedTask.created_at).toISOString(),
@@ -177,8 +174,8 @@ export class TaskService {
       id: findTask.id,
       title: findTask.title,
       description: findTask.description,
-      start_date: fromStringToLocalString(String(findTask.start_date)),
-      end_date: fromStringToLocalString(String(findTask.end_date)),
+      start_date: new Date(findTask.start_date).toISOString(),
+      end_date: new Date(findTask.end_date).toISOString(),
       is_done: findTask.is_done,
       label_color: findTask.label_color,
       created_at: new Date(findTask.created_at).toISOString(),
