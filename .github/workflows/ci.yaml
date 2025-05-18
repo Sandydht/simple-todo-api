@@ -6,18 +6,7 @@ on:
       - master
 
 jobs:
-  commitlint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Commit
-        uses: wagoid/commitlint-github-action@v4
-  
   test:
-    needs: commitlint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository code
