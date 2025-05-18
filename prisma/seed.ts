@@ -48,7 +48,7 @@ async function createTask() {
         start_date: String(formatNow),
         end_date: String(formatNow),
         is_done: false,
-        label_color: '#BB3E00',
+        label_color: '#62748e',
       },
     });
 
