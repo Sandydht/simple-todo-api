@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:13.21-alpine3.20
+    container_name: postgreSQL
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    networks:
+      - simple-todo-app
+  back-end-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simple-todo-api
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${PORT}
+      IS_HTTPS: ${IS_HTTPS}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - db
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - simple-todo-app
+
+networks:
+  simple-todo-app:
+    driver: bridge
