@@ -11,8 +11,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        
       - name: Commit
         uses: wagoid/commitlint-github-action@v4
   
