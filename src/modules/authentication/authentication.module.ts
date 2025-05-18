@@ -12,17 +12,12 @@ import { JwtStrategy } from 'src/lib/passport/jwt.strategy';
     ConfigModule,
     JwtModule.register({
       signOptions: {
-        expiresIn: '1h'
-      }
+        expiresIn: '1h',
+      },
     }),
-    PassportModule
+    PassportModule,
   ],
-  providers: [
-    AuthenticationService,
-    PrismaService,
-    JwtService,
-    JwtStrategy
-  ],
-  controllers: [AuthenticationController]
+  providers: [AuthenticationService, PrismaService, JwtService, JwtStrategy],
+  controllers: [AuthenticationController],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

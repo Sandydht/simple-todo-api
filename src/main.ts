@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -11,13 +12,13 @@ async function bootstrap() {
       secret: 'keyboard cat',
       resave: false,
       saveUninitialized: false,
-      cookie: { 
-        secure: false 
-      }, // set true di production HTTPS
+      cookie: {
+        secure: false,
+      },
     }),
   );
 
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+void bootstrap();

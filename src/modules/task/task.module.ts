@@ -12,8 +12,8 @@ import { JwtStrategy } from 'src/lib/passport/jwt.strategy';
     PrismaService,
     AuthenticationService,
     JwtStrategy,
-    JwtService
+    JwtService,
   ],
-  controllers: [TaskController]
+  controllers: [TaskController],
 })
-export class TaskModule { }
+export class TaskModule {}

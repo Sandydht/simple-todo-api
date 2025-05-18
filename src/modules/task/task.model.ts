@@ -12,7 +12,7 @@ export interface TaskData {
   is_done: boolean;
   label_color: string;
   created_at: string | null;
-  updated_at: string | null; 
+  updated_at: string | null;
 }
 
 export interface GetTaskListResponse {
