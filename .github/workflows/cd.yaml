@@ -2,8 +2,6 @@ name: Continuous Deployment
 
 on:
   push:
-    branches:
-      - master
     tags:
       - 'v*'
 
@@ -42,7 +40,7 @@ jobs:
           script: |
             docker rmi -f $(docker images -aq)
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.TAG }}
-            docker run -dp ${{ secrets.DOCKER_CONTAINER_PORT_2 }}:${{ secrets.DOCKER_IMAGE_PORT }} --name ${{ secrets.DOCKER_CONTAINER_NAME_2 }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.TAG }}
+            docker run -dp ${{ secrets.DOCKER_CONTAINER_PORT_2 }}:${{ secrets.DOCKER_IMAGE_PORT }} --name ${{ secrets.DOCKER_CONTAINER_NAME_2 }} -e NODE_ENV=${{ secrets.NODE_ENV }} -e PORT=${{ secrets.PORT }} -e IS_HTTPS=${{ secrets.IS_HTTPS }} -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} -e DATABASE_URL=${{ secrets.DATABASE_URL }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.TAG }}
 
             for i in {1..10}; do
               if curl -s http://localhost:${{ secrets.DOCKER_CONTAINER_PORT_2 }}/health; then
